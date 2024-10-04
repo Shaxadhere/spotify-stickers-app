@@ -112,7 +112,7 @@ const SpotifyCard = () => {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="max-w-6xl mx-auto bg-[#181818] rounded-lg shadow-lg p-8 flex lg:space-x-8">
+      <div className="max-w-full lg:max-w-6xl mx-auto bg-[#181818] rounded-lg shadow-lg p-8 flex lg:space-x-8">
         <div className="w-full lg:w-1/2 flex flex-col">
           <h1 className="text-3xl font-bold mb-4 text-white">Spotify Codes</h1>
           <p className="text-gray-300 mb-6">
