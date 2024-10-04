@@ -12,10 +12,12 @@ const SpotifyCard = () => {
     "https://open.spotify.com/track/3wGp1azIVCBN1wzsph3f2m?si=5e64d6e4d3bf4474"
   );
   const [result, setResult] = React.useState({});
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const [selectedStyle, setSelectedStyle] = React.useState(1);
 
   const onSearch = async () => {
+    setIsLoading(true);
     const type = query?.split("/")?.at(3);
     const id = query?.split("/")?.at(4);
     const data = await getSpotifyInfo(type, id);
@@ -50,6 +52,7 @@ const SpotifyCard = () => {
       default:
         break;
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -107,8 +110,8 @@ const SpotifyCard = () => {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="max-w-6xl mx-auto bg-[#181818] rounded-lg shadow-lg p-8 flex space-x-8">
-        <div className="w-1/2 flex flex-col">
+      <div className="max-w-6xl mx-auto bg-[#181818] rounded-lg shadow-lg p-8 flex lg:space-x-8">
+        <div className="w-full lg:w-1/2 flex flex-col">
           <h1 className="text-3xl font-bold mb-4 text-white">Spotify Codes</h1>
           <p className="text-gray-300 mb-6">
             Spotify Codes offer a way for users to share and discover amazing
@@ -127,15 +130,16 @@ const SpotifyCard = () => {
           />
           <button
             onClick={onSearch}
-            className="bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-200"
+            className={`bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-200 ${isLoading? 'cursor-not-allowed bg-green-900 hover:bg-green-900' : ''}`}
+            disabled={isLoading}
           >
-            GET SPOTIFY STICKER
+            {isLoading ? "GETTING DATA FROM SPOTIFY..." : "GET SPOTIFY STICKER"}
           </button>
         </div>
-        <div className="w-1/2 flex items-center justify-center">
+        <div className="w-full mt-10 lg:mt-0 lg:w-1/2 flex items-center justify-center">
           <div className="flex gap-2 flex-col">
             <div className="flex gap-2 items-center justify-between">
-              <div className="flex gap-2 items-center justify-between">
+              <div className="flex !flex-row gap-2 items-center justify-between">
                 <button
                   className={
                     "bg-slate-600 text-sm max-w-[120px] text-white py-2 px-4 rounded-lg shadow-md hover:bg-slate-900 transition duration-200" +
@@ -166,7 +170,7 @@ const SpotifyCard = () => {
               </div>
             </div>
             <div ref={stickerComponentRef}>
-              <SpotifySticker data={result} style={selectedStyle}/>
+              <SpotifySticker data={result} style={selectedStyle} />
             </div>
 
             <button
