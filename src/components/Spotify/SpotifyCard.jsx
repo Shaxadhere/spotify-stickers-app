@@ -76,6 +76,7 @@ const SpotifyCard = () => {
 
   const downloadImage = () => {
     if (!stickerComponentRef.current) return;
+    if(!result?.name) return;
 
     // Wait for images to load before capturing
     const images = stickerComponentRef.current.querySelectorAll("img");
@@ -97,7 +98,8 @@ const SpotifyCard = () => {
           const data = canvas.toDataURL("image/png");
           const link = document.createElement("a");
           link.href = data;
-          link.download = "downloaded-image.png";
+          const fileName = `${result?.name || "spotify-sticker"}.png`
+          link.download = fileName
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
