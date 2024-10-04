@@ -1,0 +1,24 @@
+body,html {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #1b1b1b;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px; /* Width of the thumb */
+  height: 18px; /* Height of the thumb */
+  background: black; /* Thumb color */
+  border-radius: 50%; /* Make it round */
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px; /* Width of the thumb */
+  height: 18px; /* Height of the thumb */
+  background: black; /* Thumb color */
+  border-radius: 50%; /* Make it round */
+  cursor: pointer;
+}
