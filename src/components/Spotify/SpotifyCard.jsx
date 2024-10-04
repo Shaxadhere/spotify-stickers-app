@@ -5,8 +5,10 @@ import STORAGE from "../../constants/storage.constants";
 import { getToken } from "../../utils/request.util";
 import { ITEM_TYPES } from "../../constants/spotify.constants";
 import html2canvas from "html2canvas";
+import { convertQueryStringToObject } from "../../utils/url-utils";
 
 const SpotifyCard = () => {
+  const queryString = convertQueryStringToObject();
   const stickerComponentRef = useRef(null);
   const [query, setQuery] = React.useState(
     "https://open.spotify.com/track/3wGp1azIVCBN1wzsph3f2m?si=5e64d6e4d3bf4474"
@@ -76,7 +78,7 @@ const SpotifyCard = () => {
 
   const downloadImage = () => {
     if (!stickerComponentRef.current) return;
-    if(!result?.name) return;
+    if (!result?.name) return;
 
     // Wait for images to load before capturing
     const images = stickerComponentRef.current.querySelectorAll("img");
@@ -98,8 +100,8 @@ const SpotifyCard = () => {
           const data = canvas.toDataURL("image/png");
           const link = document.createElement("a");
           link.href = data;
-          const fileName = `${result?.name || "spotify-sticker"}.png`
-          link.download = fileName
+          const fileName = `${result?.name || "spotify-sticker"}.png`;
+          link.download = fileName;
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
@@ -111,12 +113,35 @@ const SpotifyCard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="max-w-full lg:max-w-6xl mx-auto bg-[#181818] rounded-lg shadow-lg p-8 flex lg:space-x-8">
+    <div
+      className={`min-h-screen bg-black flex items-center justify-center`}
+      style={{
+        backgroundColor: `#${queryString?.bg}`,
+      }}
+    >
+      <div
+        className="max-w-full lg:max-w-6xl mx-auto bg-[#181818] rounded-lg shadow-lg p-8 flex lg:space-x-8"
+        style={{
+          backgroundColor: `#${queryString?.cardBg}`,
+        }}
+      >
         <div className="w-full lg:w-1/2 flex flex-col">
-          <h1 className="text-3xl font-bold mb-4 text-white">Spotify Codes</h1>
-          <p className="text-gray-300 mb-6">
-            Spotify Codes helps users to generate stickers for their favorite songs, albums, playlists, and artists.
+          <h1
+            className="text-3xl font-bold mb-4 text-white"
+            style={{
+              color: `#${queryString?.headingColor}`,
+            }}
+          >
+            Spotify Codes
+          </h1>
+          <p
+            className="text-gray-300 mb-6"
+            style={{
+              color: `#${queryString?.textColor}`,
+            }}
+          >
+            Spotify Codes helps users to generate stickers for their favorite
+            songs, albums, playlists, and artists.
           </p>
           <label className="block text-gray-200 mb-2" htmlFor="spotifyUri">
             Enter a Spotify URI to get started
@@ -128,10 +153,18 @@ const SpotifyCard = () => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="w-full p-3 border border-gray-600 rounded-lg mb-4 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
+            style={{
+                backgroundColor: `#${queryString?.inputBg}`,
+                color: `#${queryString?.inputColor}`,
+            }}
           />
           <button
             onClick={onSearch}
-            className={`bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-200 ${isLoading? 'cursor-not-allowed bg-green-900 hover:bg-green-900' : ''}`}
+            className={`bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-200 ${
+              isLoading
+                ? "cursor-not-allowed bg-green-900 hover:bg-green-900"
+                : ""
+            }`}
             disabled={isLoading}
           >
             {isLoading ? "GETTING DATA FROM SPOTIFY..." : "GET SPOTIFY STICKER"}
