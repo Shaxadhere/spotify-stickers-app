@@ -6,22 +6,25 @@ import { getToken } from "../../utils/request.util";
 import { ITEM_TYPES } from "../../constants/spotify.constants";
 import html2canvas from "html2canvas";
 import { convertQueryStringToObject } from "../../utils/url-utils";
+import useUrlState from "../../hooks/useUrlState";
 
 const SpotifyCard = () => {
   const queryString = convertQueryStringToObject();
   const stickerComponentRef = useRef(null);
-  const [query, setQuery] = React.useState(
-    "https://open.spotify.com/track/3wGp1azIVCBN1wzsph3f2m?si=5e64d6e4d3bf4474"
-  );
+  const [query, setQuery] = useUrlState({
+    url: queryString?.url
+      ? queryString?.url
+      : "https://open.spotify.com/track/3wGp1azIVCBN1wzsph3f2m?si=5e64d6e4d3bf4474",
+    style: queryString?.style ? Number(queryString?.style) : 1,
+  });
+
   const [result, setResult] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const [selectedStyle, setSelectedStyle] = React.useState(1);
-
   const onSearch = async () => {
     setIsLoading(true);
-    const type = query?.split("/")?.at(3);
-    const id = query?.split("/")?.at(4);
+    const type = query?.url?.split("/")?.at(3);
+    const id = query?.url?.split("/")?.at(4);
     const data = await getSpotifyInfo(type, id);
 
     switch (type) {
@@ -150,12 +153,12 @@ const SpotifyCard = () => {
             type="text"
             id="spotifyUri"
             placeholder="spotify:user:spotify:playlist:37i9dQZF1DXcBWIGoYBM5M"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            value={query?.url}
+            onChange={(e) => setQuery({ url: e.target.value })}
             className="w-full p-3 border border-gray-600 rounded-lg mb-4 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
             style={{
-                backgroundColor: `#${queryString?.inputBg}`,
-                color: `#${queryString?.inputColor}`,
+              backgroundColor: `#${queryString?.inputBg}`,
+              color: `#${queryString?.inputColor}`,
             }}
           />
           <button
@@ -177,34 +180,34 @@ const SpotifyCard = () => {
                 <button
                   className={
                     "bg-slate-600 text-sm max-w-[120px] text-white py-2 px-4 rounded-lg shadow-md hover:bg-slate-900 transition duration-200" +
-                    (selectedStyle === 1 ? " bg-slate-900" : "")
+                    (Number(query?.style) === 1 ? " bg-slate-900" : "")
                   }
-                  onClick={() => setSelectedStyle(1)}
+                  onClick={() => setQuery({ style: 1 })}
                 >
                   Style 01
                 </button>
                 <button
                   className={
                     "bg-slate-600 text-sm max-w-[120px] text-white py-2 px-4 rounded-lg shadow-md hover:bg-slate-900 transition duration-200" +
-                    (selectedStyle === 2 ? " bg-slate-900" : "")
+                    (Number(query?.style) === 2 ? " bg-slate-900" : "")
                   }
-                  onClick={() => setSelectedStyle(2)}
+                  onClick={() => setQuery({ style: 2 })}
                 >
                   Style 02
                 </button>
                 <button
                   className={
                     "bg-slate-600 text-sm max-w-[120px] text-white py-2 px-4 rounded-lg shadow-md hover:bg-slate-900 transition duration-200" +
-                    (selectedStyle === 3 ? " bg-slate-900" : "")
+                    (Number(query?.style) === 3 ? " bg-slate-900" : "")
                   }
-                  onClick={() => setSelectedStyle(3)}
+                  onClick={() => setQuery({ style: 3 })}
                 >
                   Style 03
                 </button>
               </div>
             </div>
             <div ref={stickerComponentRef}>
-              <SpotifySticker data={result} style={selectedStyle} />
+              <SpotifySticker data={result} style={query?.style} />
             </div>
 
             <button
