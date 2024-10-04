@@ -2,50 +2,6 @@ import React from "react";
 import Player from "../../assets/player.png"
 
 const SpotifySticker = ({ data = {}, style = 1 }) => {
-  data = {
-    album_type: "album",
-    total_tracks: 12,
-    external_urls: {
-      spotify: "https://open.spotify.com/album/0dNZ3ypCu19FqmRxB1ezBc",
-    },
-    href: "https://api.spotify.com/v1/albums/0dNZ3ypCu19FqmRxB1ezBc",
-    id: "0dNZ3ypCu19FqmRxB1ezBc",
-    images: [
-      {
-        url: "https://i.scdn.co/image/ab67616d0000b273099bfbcf7ced6e82f8a797c7",
-        height: 640,
-        width: 640,
-      },
-      {
-        url: "https://i.scdn.co/image/ab67616d00001e02099bfbcf7ced6e82f8a797c7",
-        height: 300,
-        width: 300,
-      },
-      {
-        url: "https://i.scdn.co/image/ab67616d00004851099bfbcf7ced6e82f8a797c7",
-        height: 64,
-        width: 64,
-      },
-    ],
-    name: "Scars & Screws",
-    release_date: "2021-09-24",
-    release_date_precision: "day",
-    type: "album",
-    uri: "spotify:album:0dNZ3ypCu19FqmRxB1ezBc",
-    artists: [
-      {
-        external_urls: {
-          spotify: "https://open.spotify.com/artist/5bxVbtf4t5k1QPmy0XDvgv",
-        },
-        href: "https://api.spotify.com/v1/artists/5bxVbtf4t5k1QPmy0XDvgv",
-        id: "5bxVbtf4t5k1QPmy0XDvgv",
-        name: "Shamoon Ismail",
-        type: "artist",
-        uri: "spotify:artist:5bxVbtf4t5k1QPmy0XDvgv",
-      },
-    ],
-  };
-
   switch (style) {
     case 1:
       return <StyleOne data={data} />;
