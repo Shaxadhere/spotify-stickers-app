@@ -116,8 +116,7 @@ const SpotifyCard = () => {
         <div className="w-full lg:w-1/2 flex flex-col">
           <h1 className="text-3xl font-bold mb-4 text-white">Spotify Codes</h1>
           <p className="text-gray-300 mb-6">
-            Spotify Codes offer a way for users to share and discover amazing
-            content on Spotify. It's as easy as taking a picture. Learn how!
+            Spotify Codes helps users to generate stickers for their favorite songs, albums, playlists, and artists.
           </p>
           <label className="block text-gray-200 mb-2" htmlFor="spotifyUri">
             Enter a Spotify URI to get started
